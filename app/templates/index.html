@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<h1>Tuning Community</h1>
+
+<p>
+Welcome to the Tuning Community management platform.
+</p>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Users</h5>
+                <a href="/users"
+                   class="btn btn-primary">
+                   View
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Cars</h5>
+                <a href="/stock-cars"
+                   class="btn btn-primary">
+                   View
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Builds</h5>
+                <a href="/builds"
+                   class="btn btn-primary">
+                   View
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Mods</h5>
+                <a href="/mods"
+                   class="btn btn-primary">
+                   View
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
