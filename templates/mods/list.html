@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Mods</h2>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for mod in mods %}
+
+        <tr>
+            <td>{{ mod.id }}</td>
+            <td>{{ mod.name }}</td>
+            <td>{{ mod.type_mod }}</td>
+
+            <td>
+                <a href="/mods/{{ mod.id }}"
+                   class="btn btn-primary">
+                    Detail
+                </a>
+            </td>
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

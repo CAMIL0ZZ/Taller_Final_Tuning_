@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ user.username }}</h2>
+
+<p>
+    <strong>Email:</strong>
+    {{ user.email }}
+</p>
+
+{% if user.picture %}
+
+<img
+    src="{{ user.picture }}"
+    class="img-fluid rounded"
+    width="300">
+
+{% endif %}
+
+
+<h2>User Detail</h2>
+
+<div class="card">
+
+    <div class="card-body">
+
+        {% if user.picture %}
+        <img src="{{ user.picture }}"
+             width="200"
+             class="mb-3">
+        {% endif %}
+
+        <p><strong>ID:</strong> {{ user.id }}</p>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
