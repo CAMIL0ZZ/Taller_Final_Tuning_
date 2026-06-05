@@ -1,26 +1,51 @@
 from pydantic import BaseModel
 from typing import Optional
 
-
-class BuildModCreate(BaseModel):
-    build_id: int
-    mod_id: int
+from app.enums.build_approach import BuildApproach
 
 
-class BuildModResponse(BaseModel):
+class BuildBase(BaseModel):
+
+    user_id: int
+    stock_car_id: int
+
+    build_name: str
+    build_approach: BuildApproach
+
+    engine: str
+    year: int
+    hp: int
+
+    price: float
+
+
+class BuildCreate(BuildBase):
+    pass
+
+
+class BuildUpdate(BaseModel):
+
+    user_id: Optional[int] = None
+    stock_car_id: Optional[int] = None
+
+    build_name: Optional[str] = None
+    build_approach: Optional[BuildApproach] = None
+
+    engine: Optional[str] = None
+    year: Optional[int] = None
+    hp: Optional[int] = None
+
+    price: Optional[float] = None
+
+
+class BuildResponse(BuildBase):
+
     id: int
-    build_id: int
-    mod_id: int
+    picture: Optional[str] = None
 
     model_config = {
         "from_attributes": True
     }
-
-class BuildModUpdate(BaseModel):
-
-    build_id: Optional[int] = None
-    mod_id: Optional[int] = None
-
 
 """
 from pydantic import (
@@ -29,39 +54,102 @@ from pydantic import (
 )
 from typing import Optional
 
+from app.enums.build_approach import BuildApproach
 
-class BuildModCreate(BaseModel):
 
-    build_id: int = Field(
+class BuildBase(BaseModel):
+
+    user_id: int = Field(
         gt=0
     )
 
-    mod_id: int = Field(
+    stock_car_id: int = Field(
+        gt=0
+    )
+
+    build_name: str = Field(
+        min_length=3,
+        max_length=60
+    )
+
+    build_approach: BuildApproach
+
+    engine: str = Field(
+        min_length=2,
+        max_length=80
+    )
+
+    year: int = Field(
+        ge=1900,
+        le=2100
+    )
+
+    hp: int = Field(
+        gt=0,
+        le=5000
+    )
+
+    price: float = Field(
         gt=0
     )
 
 
-class BuildModUpdate(BaseModel):
+class BuildCreate(BuildBase):
+    pass
 
-    build_id: Optional[int] = Field(
+
+class BuildUpdate(BaseModel):
+
+    user_id: Optional[int] = Field(
         default=None,
         gt=0
     )
 
-    mod_id: Optional[int] = Field(
+    stock_car_id: Optional[int] = Field(
+        default=None,
+        gt=0
+    )
+
+    build_name: Optional[str] = Field(
+        default=None,
+        min_length=3,
+        max_length=60
+    )
+
+    build_approach: Optional[
+        BuildApproach
+    ] = None
+
+    engine: Optional[str] = Field(
+        default=None,
+        min_length=2,
+        max_length=80
+    )
+
+    year: Optional[int] = Field(
+        default=None,
+        ge=1900,
+        le=2100
+    )
+
+    hp: Optional[int] = Field(
+        default=None,
+        gt=0,
+        le=5000
+    )
+
+    price: Optional[float] = Field(
         default=None,
         gt=0
     )
 
 
-class BuildModResponse(BaseModel):
+class BuildResponse(BuildBase):
 
     id: int
-    build_id: int
-    mod_id: int
+    picture: Optional[str] = None
 
     model_config = {
         "from_attributes": True
     }
-
 """
