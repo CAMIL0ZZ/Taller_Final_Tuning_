@@ -1,32 +1,67 @@
 from pydantic import BaseModel
 from typing import Optional
 
-from app.enums.build_approach import BuildApproach
+
+class BuildModCreate(BaseModel):
+    build_id: int
+    mod_id: int
 
 
-class BuildBase(BaseModel):
-    name: str
-    build_approach: BuildApproach
-    price: float
-    user_id: int
-    stock_car_id: int
-
-
-class BuildCreate(BuildBase):
-    pass
-
-
-class BuildUpdate(BaseModel):
-    name: Optional[str] = None
-    build_approach: Optional[BuildApproach] = None
-    price: Optional[float] = None
-    user_id: Optional[int] = None
-    stock_car_id: Optional[int] = None
-
-
-class BuildResponse(BuildBase):
+class BuildModResponse(BaseModel):
     id: int
+    build_id: int
+    mod_id: int
 
     model_config = {
         "from_attributes": True
     }
+
+class BuildModUpdate(BaseModel):
+
+    build_id: Optional[int] = None
+    mod_id: Optional[int] = None
+
+
+"""
+from pydantic import (
+    BaseModel,
+    Field
+)
+from typing import Optional
+
+
+class BuildModCreate(BaseModel):
+
+    build_id: int = Field(
+        gt=0
+    )
+
+    mod_id: int = Field(
+        gt=0
+    )
+
+
+class BuildModUpdate(BaseModel):
+
+    build_id: Optional[int] = Field(
+        default=None,
+        gt=0
+    )
+
+    mod_id: Optional[int] = Field(
+        default=None,
+        gt=0
+    )
+
+
+class BuildModResponse(BaseModel):
+
+    id: int
+    build_id: int
+    mod_id: int
+
+    model_config = {
+        "from_attributes": True
+    }
+
+"""
