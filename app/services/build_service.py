@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-
+from app.services.upload_service import UploadService
 from app.database.supabase_client import supabase
 from app.services.validator_service import ValidatorService
 
@@ -86,12 +86,30 @@ class BuildService:
 
         BuildService.get_by_id(build_id)
 
+        relations = (
+            supabase.table("build_mods")
+            .select("id")
+            .eq("build_id", build_id)
+            .execute()
+        )
+
+        if relations.data:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Cannot delete build because it has "
+                    "associated mods. Remove them first."
+                )
+            )
+
         supabase.table("builds") \
             .delete() \
             .eq("id", build_id) \
             .execute()
 
-        return {"message": "Build deleted"}
+        return {
+            "message": "Build deleted"
+        }
 
     @staticmethod
     def get_by_user(user_id: int):
@@ -125,3 +143,25 @@ class BuildService:
             .execute()
             .data
         )
+
+    @staticmethod
+    def upload_picture(build_id, file):
+
+        BuildService.get_by_id(build_id)
+
+        image_url = UploadService.upload_entity_picture(
+            "builds",
+            build_id,
+            file
+        )
+
+        supabase.table("builds") \
+            .update({
+            "picture": image_url
+        }) \
+            .eq("id", build_id) \
+            .execute()
+
+        return {
+            "picture": image_url
+        }

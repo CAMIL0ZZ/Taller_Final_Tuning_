@@ -74,9 +74,47 @@ class StockCarService:
 
         StockCarService.get_by_id(car_id)
 
+        builds = (
+            supabase.table("builds")
+            .select("id")
+            .eq("stock_car_id", car_id)
+            .execute()
+        )
+
+        if builds.data:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Cannot delete stock car because it is "
+                    "used by one or more builds."
+                )
+            )
+
         supabase.table("stock_cars") \
             .delete() \
             .eq("id", car_id) \
             .execute()
 
-        return {"message": "Stock car deleted"}
+        return {
+            "message": "Stock car deleted"
+        }
+
+    @staticmethod
+    def upload_picture(car_id, file):
+
+        StockCarService.get_by_id(car_id)
+
+        image_url = UploadService.upload_entity_picture(
+            "stock_cars",
+            car_id,
+            file
+        )
+
+        supabase.table("stock_cars") \
+            .update({"picture": image_url}) \
+            .eq("id", car_id) \
+            .execute()
+
+        return {
+            "picture": image_url
+        }

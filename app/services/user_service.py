@@ -73,12 +73,30 @@ class UserService:
 
         UserService.get_by_id(user_id)
 
+        builds = (
+            supabase.table("builds")
+            .select("id")
+            .eq("user_id", user_id)
+            .execute()
+        )
+
+        if builds.data:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Cannot delete user because it has "
+                    "associated builds. Delete them first."
+                )
+            )
+
         supabase.table("users") \
             .delete() \
             .eq("id", user_id) \
             .execute()
 
-        return {"message": "User deleted"}
+        return {
+            "message": "User deleted"
+        }
 
     @staticmethod
     def upload_picture(user_id, file):

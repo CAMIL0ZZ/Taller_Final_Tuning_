@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-
+from app.services.upload_service import UploadService
 from app.database.supabase_client import supabase
 
 
@@ -63,13 +63,51 @@ class ModService:
         )
 
     @staticmethod
-    def delete(mod_id):
+    def delete(mod_id: int):
 
         ModService.get_by_id(mod_id)
+
+        relations = (
+            supabase.table("build_mods")
+            .select("id")
+            .eq("mod_id", mod_id)
+            .execute()
+        )
+
+        if relations.data:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Cannot delete mod because it is "
+                    "assigned to one or more builds."
+                )
+            )
 
         supabase.table("mods") \
             .delete() \
             .eq("id", mod_id) \
             .execute()
 
-        return {"message": "Mod deleted"}
+        return {
+            "message": "Mod deleted"
+        }
+
+    @staticmethod
+    def upload_picture(mod_id, file):
+
+        ModService.get_by_id(mod_id)
+
+        image_url = UploadService.upload_entity_picture(
+            "mods",
+            mod_id,
+            file
+        )
+
+        supabase.table("mods") \
+            .update({"picture": image_url}) \
+            .eq("id", mod_id) \
+            .execute()
+
+        return {
+            "picture": image_url
+        }
