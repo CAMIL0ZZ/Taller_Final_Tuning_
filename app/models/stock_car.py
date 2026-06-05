@@ -1,54 +1,3 @@
-from pydantic import BaseModel
-from typing import Optional
-
-from app.enums.fuel_type import FuelType
-from app.enums.chassis_type import ChassisType
-
-
-class StockCarBase(BaseModel):
-    brand: str
-    model: str
-
-    production_start: int
-    production_end: Optional[int] = None
-
-    chassis_type: ChassisType
-    fuel: FuelType
-
-    price: float
-    stock_hp: int
-
-
-class StockCarCreate(StockCarBase):
-    pass
-
-
-class StockCarUpdate(BaseModel):
-    brand: Optional[str] = None
-    model: Optional[str] = None
-
-    production_start: Optional[int] = None
-    production_end: Optional[int] = None
-
-    chassis_type: Optional[ChassisType] = None
-    fuel: Optional[FuelType] = None
-
-    price: Optional[float] = None
-    stock_hp: Optional[int] = None
-
- #   picture: Optional[str] = None
-
-
-class StockCarResponse(StockCarBase):
-    id: int
-    picture: Optional[str] = None
-
-    model_config = {
-        "from_attributes": True
-    }
-
-
-"""
 from pydantic import (
     BaseModel,
     Field
@@ -73,13 +22,13 @@ class StockCarBase(BaseModel):
 
     production_start: int = Field(
         ge=1900,
-        le=2100
+        le=2027
     )
 
     production_end: Optional[int] = Field(
         default=None,
         ge=1900,
-        le=2100
+        le=2027
     )
 
     chassis_type: ChassisType
@@ -148,4 +97,3 @@ class StockCarResponse(StockCarBase):
     model_config = {
         "from_attributes": True
     }
-"""

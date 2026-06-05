@@ -1,53 +1,3 @@
-from pydantic import BaseModel
-from typing import Optional
-
-from app.enums.build_approach import BuildApproach
-
-
-class BuildBase(BaseModel):
-
-    user_id: int
-    stock_car_id: int
-
-    build_name: str
-    build_approach: BuildApproach
-
-    engine: str
-    year: int
-    hp: int
-
-    price: float
-
-
-class BuildCreate(BuildBase):
-    pass
-
-
-class BuildUpdate(BaseModel):
-
-    user_id: Optional[int] = None
-    stock_car_id: Optional[int] = None
-
-    build_name: Optional[str] = None
-    build_approach: Optional[BuildApproach] = None
-
-    engine: Optional[str] = None
-    year: Optional[int] = None
-    hp: Optional[int] = None
-
-    price: Optional[float] = None
-
-
-class BuildResponse(BuildBase):
-
-    id: int
-    picture: Optional[str] = None
-
-    model_config = {
-        "from_attributes": True
-    }
-
-"""
 from pydantic import (
     BaseModel,
     Field
@@ -152,4 +102,3 @@ class BuildResponse(BuildBase):
     model_config = {
         "from_attributes": True
     }
-"""

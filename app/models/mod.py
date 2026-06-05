@@ -1,39 +1,3 @@
-from pydantic import BaseModel
-from typing import Optional
-
-from app.enums.mod_type import ModType
-
-
-class ModBase(BaseModel):
-    type_mod: ModType
-    brand: str
-    reference: str
-    name: str
-    price: float
-
-
-class ModCreate(ModBase):
-    pass
-
-
-class ModUpdate(BaseModel):
-    type_mod: Optional[ModType] = None
-    brand: Optional[str] = None
-    reference: Optional[str] = None
-    name: Optional[str] = None
-    price: Optional[float] = None
- #   picture: Optional[str] = None
-
-
-class ModResponse(ModBase):
-    id: int
-    picture: Optional[str] = None
-
-    model_config = {
-        "from_attributes": True
-    }
-
-"""
 from pydantic import (
     BaseModel,
     Field
@@ -107,5 +71,3 @@ class ModResponse(ModBase):
     model_config = {
         "from_attributes": True
     }
-
-"""
