@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 
 from app.services.mod_service import (
     ModService
@@ -57,4 +57,14 @@ def update_mod(
 def delete_mod(mod_id: int):
     return ModService.delete(
         mod_id
+    )
+
+@router.post("/{mod_id}/picture")
+def upload_picture(
+    mod_id: int,
+    file: UploadFile = File(...)
+):
+    return ModService.upload_picture(
+        mod_id,
+        file
     )

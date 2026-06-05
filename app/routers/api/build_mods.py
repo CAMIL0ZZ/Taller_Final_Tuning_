@@ -5,7 +5,8 @@ from app.services.build_mod_service import (
 )
 
 from app.models.build_mod import (
-    BuildModCreate
+    BuildModCreate,
+    BuildModUpdate
 )
 
 router = APIRouter(
@@ -34,4 +35,32 @@ def delete_relation(
 ):
     return BuildModService.delete(
         relation_id
+    )
+
+@router.put("/{relation_id}")
+def update_relation(
+    relation_id: int,
+    relation: BuildModUpdate
+):
+    return BuildModService.update(
+        relation_id,
+        relation.model_dump(
+            exclude_unset=True
+        )
+    )
+
+@router.get("/mod/{mod_id}")
+def get_mod_builds(
+    mod_id: int
+):
+    return BuildModService.get_by_mod(
+        mod_id
+    )
+
+@router.get("/build/{build_id}")
+def get_build_mods(
+    build_id: int
+):
+    return BuildModService.get_mods_by_build(
+        build_id
     )

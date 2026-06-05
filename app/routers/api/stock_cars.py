@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 
 from app.services.stock_car_service import (
     StockCarService
@@ -56,3 +56,13 @@ def update_stock_car(
 @router.delete("/{car_id}")
 def delete_stock_car(car_id: int):
     return StockCarService.delete(car_id)
+
+@router.post("/{car_id}/picture")
+def upload_picture(
+    car_id: int,
+    file: UploadFile = File(...)
+):
+    return StockCarService.upload_picture(
+        car_id,
+        file
+    )

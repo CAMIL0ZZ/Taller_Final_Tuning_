@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 
 from app.services.build_service import (
     BuildService
@@ -74,4 +74,14 @@ def get_car_builds(
 def get_build(build_id: int):
     return BuildService.get_by_id(
         build_id
+    )
+
+@router.post("/{build_id}/picture")
+def upload_picture(
+    build_id: int,
+    file: UploadFile = File(...)
+):
+    return BuildService.upload_picture(
+        build_id,
+        file
     )
