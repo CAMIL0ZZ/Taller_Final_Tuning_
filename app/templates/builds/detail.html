@@ -2,17 +2,317 @@
 
 {% block content %}
 
-<h2>Build Detail</h2>
+<div class="container">
 
-<div class="card">
-    <div class="card-body">
+    <div class="card shadow">
 
-        <p><strong>ID:</strong> {{ build.id }}</p>
-        <p><strong>Name:</strong> {{ build.name }}</p>
-        <p><strong>Approach:</strong> {{ build.build_approach }}</p>
-        <p><strong>Price:</strong> ${{ build.price }}</p>
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+
+                {% if build.picture %}
+
+                    <img
+                        src="{{ build.picture }}"
+                        width="900"
+                        height="450">
+
+                {% else %}
+
+                    <p>No image available</p>
+
+                {% endif %}
+
+            </div>
+
+            <h2>{{ build.build_name }}</h2>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Build Approach:</strong>
+                        {{ build.build_approach }}
+                    </p>
+
+                    <p>
+                        <strong>Engine:</strong>
+                        {{ build.engine }}
+                    </p>
+
+                    <p>
+                        <strong>Year:</strong>
+                        {{ build.year }}
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Horsepower:</strong>
+                        {{ build.hp }} HP
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ${{ build.price }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h3>Owner</h3>
+
+            <div class="card mb-3">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            {% if user.picture %}
+
+                                <img
+                                    src="{{ user.picture }}"
+                                    width="150"
+                                    height="150"
+                                    class="rounded">
+
+                            {% else %}
+
+                                <div class="text-center">
+
+                                    No Image
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="col-md-9">
+
+                            <p>
+                                <strong>Username:</strong>
+                                {{ user.username }}
+                            </p>
+
+                            <p>
+                                <strong>Email:</strong>
+                                {{ user.email }}
+                            </p>
+
+                            <p>
+                                <strong>Description:</strong>
+                                {{ user.description }}
+                            </p>
+
+                            <a href="/users/{{ user.id }}"
+                               class="btn btn-primary">
+
+                                View User
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h3>Base Vehicle</h3>
+
+            <div class="card mb-3">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+
+                            {% if stock_car.picture %}
+
+                                <img
+                                    src="{{ stock_car.picture }}"
+                                    width="250"
+                                    height="150"
+                                    class="rounded">
+
+                            {% else %}
+
+                                <div class="text-center">
+
+                                    No Image
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <p>
+                                <strong>Brand:</strong>
+                                {{ stock_car.brand }}
+                            </p>
+
+                            <p>
+                                <strong>Model:</strong>
+                                {{ stock_car.model }}
+                            </p>
+
+                            <p>
+                                <strong>Production:</strong>
+                                {{ stock_car.production_start }}
+                                -
+                                {{ stock_car.production_end }}
+                            </p>
+
+                            <p>
+                                <strong>Fuel:</strong>
+                                {{ stock_car.fuel }}
+                            </p>
+
+                            <p>
+                                <strong>Stock HP:</strong>
+                                {{ stock_car.stock_hp }}
+                            </p>
+
+                            <a href="/stock-cars/{{ stock_car.id }}"
+                               class="btn btn-primary">
+
+                                View Stock Car
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <a href="/builds"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
 
     </div>
+
+    <br>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h3>Associated Mods</h3>
+
+            <hr>
+
+            {% if mods %}
+
+                <div class="row">
+
+                    {% for relation in mods %}
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="card h-100">
+
+                            {% if relation.mods.picture %}
+
+                                <img
+                                    src="{{ relation.mods.picture }}"
+                                    width="100%"
+                                    height="180">
+
+                            {% else %}
+
+                                <div
+                                    class="text-center p-4">
+
+                                    No Image
+
+                                </div>
+
+                            {% endif %}
+
+                            <div class="card-body">
+
+                                <h5>
+
+                                    {{ relation.mods.name }}
+
+                                </h5>
+
+                                <p>
+
+                                    <strong>Brand:</strong>
+                                    {{ relation.mods.brand }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Reference:</strong>
+                                    {{ relation.mods.reference }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Type:</strong>
+                                    {{ relation.mods.type_mod }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Price:</strong>
+                                    ${{ relation.mods.price }}
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p>
+
+                    This build has no mods assigned.
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
 </div>
 
 {% endblock %}

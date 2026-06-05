@@ -2,62 +2,222 @@
 
 {% block content %}
 
-<h1>Dashboard</h1>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h1>Dashboard Analytics</h1>
 
 <div class="row">
 
     <div class="col-md-6">
 
-        <div class="card mb-3">
+        <div class="card mb-4">
+
             <div class="card-header">
-                Top Cars
+                Top 5 Most Used Stock Cars
             </div>
 
             <div class="card-body">
-                <pre>{{ top_cars }}</pre>
+
+                <canvas id="carsChart"></canvas>
+
             </div>
+
         </div>
 
     </div>
 
     <div class="col-md-6">
 
-        <div class="card mb-3">
+        <div class="card mb-4">
+
             <div class="card-header">
-                Top Mods
+                Top 5 Most Used Mods
             </div>
 
             <div class="card-body">
-                <pre>{{ top_mods }}</pre>
+
+                <canvas id="modsChart"></canvas>
+
             </div>
+
         </div>
 
     </div>
 
 </div>
 
-<div class="card mb-3">
+<div class="row">
 
-    <div class="card-header">
-        Most Expensive Builds
-    </div>
+    <div class="col-md-12">
 
-    <div class="card-body">
-        <pre>{{ expensive_builds }}</pre>
+        <div class="card mb-4">
+
+            <div class="card-header">
+                Top 5 Most Expensive Builds
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="expensiveBuildsChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
-<div class="card">
+<div class="row">
 
-    <div class="card-header">
-        Build Approach Statistics
+    <div class="col-md-6">
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                Build Approaches Distribution
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="approachChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card-body">
-        <pre>{{ build_stats }}</pre>
+    <div class="col-md-6">
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                Fuel Types Distribution
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="fuelChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
+
+<script>
+
+new Chart(
+    document.getElementById("carsChart"),
+    {
+        type: "bar",
+        data: {
+            labels: [
+                {% for car in top_cars %}
+                    "{{ car.name }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: "Build Count",
+                data: [
+                    {% for car in top_cars %}
+                        {{ car.total }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+new Chart(
+    document.getElementById("modsChart"),
+    {
+        type: "bar",
+        data: {
+            labels: [
+                {% for mod in top_mods %}
+                    "{{ mod.name }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: "Uses",
+                data: [
+                    {% for mod in top_mods %}
+                        {{ mod.total }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+new Chart(
+    document.getElementById("expensiveBuildsChart"),
+    {
+        type: "bar",
+        data: {
+            labels: [
+                {% for build in expensive_builds %}
+                    "{{ build.name }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: "Price",
+                data: [
+                    {% for build in expensive_builds %}
+                        {{ build.price }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+new Chart(
+    document.getElementById("approachChart"),
+    {
+        type: "pie",
+        data: {
+            labels: [
+                {% for item in build_stats %}
+                    "{{ item.approach }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                data: [
+                    {% for item in build_stats %}
+                        {{ item.percentage }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+new Chart(
+    document.getElementById("fuelChart"),
+    {
+        type: "pie",
+        data: {
+            labels: [
+                {% for item in fuel_stats %}
+                    "{{ item.fuel }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                data: [
+                    {% for item in fuel_stats %}
+                        {{ item.percentage }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+</script>
 
 {% endblock %}

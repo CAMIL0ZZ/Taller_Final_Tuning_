@@ -4,15 +4,18 @@
 
 <h2>Stock Cars</h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 
-    <thead>
+    <thead class="table-dark">
+
         <tr>
-            <th>ID</th>
+            <th>Photo</th>
             <th>Brand</th>
             <th>Model</th>
-            <th></th>
+            <th>Production</th>
+            <th>Actions</th>
         </tr>
+
     </thead>
 
     <tbody>
@@ -20,16 +23,48 @@
     {% for car in cars %}
 
         <tr>
-            <td>{{ car.id }}</td>
+
+            <td>
+
+                {% if car.picture %}
+                    <img
+                        src="{{ car.picture }}"
+                        width="80"
+                        height="60">
+                {% else %}
+                    No image
+                {% endif %}
+
+            </td>
+
             <td>{{ car.brand }}</td>
+
             <td>{{ car.model }}</td>
 
             <td>
-                <a href="/stock-cars/{{ car.id }}"
-                   class="btn btn-primary">
-                    Detail
-                </a>
+
+                {{ car.production_start }}
+
+                {% if car.production_end %}
+                    - {{ car.production_end }}
+                {% else %}
+                    - Present
+                {% endif %}
+
             </td>
+
+            <td>
+
+                <a
+                    href="/stock-cars/{{ car.id }}"
+                    class="btn btn-primary btn-sm">
+
+                    Detail
+
+                </a>
+
+            </td>
+
         </tr>
 
     {% endfor %}

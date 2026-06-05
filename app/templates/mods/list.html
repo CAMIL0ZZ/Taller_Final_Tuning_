@@ -4,13 +4,16 @@
 
 <h2>Mods</h2>
 
-<table class="table">
+<table class="table table-hover table-bordered align-middle">
 
-    <thead>
+    <thead class="table-dark">
         <tr>
-            <th>ID</th>
+            <th>Photo</th>
             <th>Name</th>
+            <th>Brand</th>
+            <th>Reference</th>
             <th>Type</th>
+            <th>Price</th>
             <th></th>
         </tr>
     </thead>
@@ -20,16 +23,45 @@
     {% for mod in mods %}
 
         <tr>
-            <td>{{ mod.id }}</td>
-            <td>{{ mod.name }}</td>
-            <td>{{ mod.type_mod }}</td>
 
             <td>
+
+                {% if mod.picture %}
+
+                    <img
+                        src="{{ mod.picture }}"
+                        width="120"
+                        height="80">
+
+                {% else %}
+
+                    No Image
+
+                {% endif %}
+
+            </td>
+
+            <td>{{ mod.name }}</td>
+
+            <td>{{ mod.brand }}</td>
+
+            <td>{{ mod.reference }}</td>
+
+            <td>{{ mod.type_mod }}</td>
+
+            <td>${{ mod.price }}</td>
+
+            <td>
+
                 <a href="/mods/{{ mod.id }}"
                    class="btn btn-primary">
+
                     Detail
+
                 </a>
+
             </td>
+
         </tr>
 
     {% endfor %}

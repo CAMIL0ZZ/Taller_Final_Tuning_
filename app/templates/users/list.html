@@ -4,15 +4,15 @@
 
 <h2>Users</h2>
 
-<table class="table table-striped">
+<table class="table table-hover table-bordered align-middle">
 
-    <thead>
+    <thead class="table-dark">
         <tr>
-            <th>ID</th>
+            <th>Photo</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Photo</th>
-            <th></th>
+            <th>Description</th>
+            <th>Details</th>
         </tr>
     </thead>
 
@@ -21,25 +21,40 @@
     {% for user in users %}
 
         <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
+
             <td>
 
                 {% if user.picture %}
-             <img
-               src="{{ user.picture }}"
-               width="60"
-               class="rounded">
+                    <img
+                        src="{{ user.picture }}"
+                        width="60"
+                        height="60"
+                        class="rounded-circle">
+                {% else %}
+                    No image
                 {% endif %}
 
-</td>
-            <td>
-                <a href="/users/{{ user.id }}"
-                   class="btn btn-sm btn-primary">
-                   Detail
-                </a>
             </td>
+
+            <td>{{ user.username }}</td>
+
+            <td>{{ user.email }}</td>
+
+            <td>
+                {{ user.description or "No description" }}
+            </td>
+
+            <td>
+
+                <a href="/users/{{ user.id }}"
+                   class="btn btn-primary btn-sm">
+
+                    Detail
+
+                </a>
+
+            </td>
+
         </tr>
 
     {% endfor %}

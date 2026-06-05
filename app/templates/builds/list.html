@@ -4,15 +4,19 @@
 
 <h2>Builds</h2>
 
-<table class="table">
+<table class="table table-bordered table-hover">
 
-    <thead>
+    <thead class="table-dark">
+
         <tr>
-            <th>ID</th>
+            <th>Image</th>
             <th>Name</th>
             <th>Approach</th>
-            <th></th>
+            <th>HP</th>
+            <th>Price</th>
+            <th>Details</th>
         </tr>
+
     </thead>
 
     <tbody>
@@ -20,16 +24,40 @@
     {% for build in builds %}
 
         <tr>
-            <td>{{ build.id }}</td>
-            <td>{{ build.name }}</td>
-            <td>{{ build.build_approach }}</td>
 
             <td>
-                <a href="/builds/{{ build.id }}"
-                   class="btn btn-primary">
-                   Detail
-                </a>
+
+                {% if build.picture %}
+                    <img
+                        src="{{ build.picture }}"
+                        width="180"
+                        height="120">
+                {% else %}
+                    No Image
+                {% endif %}
+
             </td>
+
+            <td>{{ build.build_name }}</td>
+
+            <td>{{ build.build_approach }}</td>
+
+            <td>{{ build.hp }}</td>
+
+            <td>${{ build.price }}</td>
+
+            <td>
+
+                <a
+                    href="/builds/{{ build.id }}"
+                    class="btn btn-primary btn-sm">
+
+                    Detail
+
+                </a>
+
+            </td>
+
         </tr>
 
     {% endfor %}

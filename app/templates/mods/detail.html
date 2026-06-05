@@ -2,16 +2,179 @@
 
 {% block content %}
 
-<h2>Mod Detail</h2>
+<div class="container">
 
-<div class="card">
+    <div class="card shadow">
 
-    <div class="card-body">
+        <div class="card-body">
 
-        <p><strong>ID:</strong> {{ mod.id }}</p>
-        <p><strong>Name:</strong> {{ mod.name }}</p>
-        <p><strong>Type:</strong> {{ mod.type_mod }}</p>
-        <p><strong>Price:</strong> ${{ mod.price }}</p>
+            <div class="text-center mb-4">
+
+                {% if mod.picture %}
+
+                    <img
+                        src="{{ mod.picture }}"
+                        width="700"
+                        height="400">
+
+                {% else %}
+
+                    <p>No image available</p>
+
+                {% endif %}
+
+            </div>
+
+            <h2>{{ mod.name }}</h2>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Brand:</strong>
+                        {{ mod.brand }}
+                    </p>
+
+                    <p>
+                        <strong>Reference:</strong>
+                        {{ mod.reference }}
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Type:</strong>
+                        {{ mod.type_mod }}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ${{ mod.price }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="/mods"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h3>Builds Using This Mod</h3>
+
+            <hr>
+
+            {% if builds %}
+
+                <div class="row">
+
+                    {% for relation in builds %}
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="card h-100">
+
+                            {% if relation.builds.picture %}
+
+                                <img
+                                    src="{{ relation.builds.picture }}"
+                                    width="100%"
+                                    height="180">
+
+                            {% else %}
+
+                                <div
+                                    class="text-center p-4">
+
+                                    No Image
+
+                                </div>
+
+                            {% endif %}
+
+                            <div class="card-body">
+
+                                <h5>
+
+                                    {{ relation.builds.build_name }}
+
+                                </h5>
+
+                                <p>
+
+                                    <strong>Approach:</strong>
+                                    {{ relation.builds.build_approach }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Engine:</strong>
+                                    {{ relation.builds.engine }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>HP:</strong>
+                                    {{ relation.builds.hp }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Price:</strong>
+                                    ${{ relation.builds.price }}
+
+                                </p>
+
+                                <a
+                                    href="/builds/{{ relation.builds.id }}"
+                                    class="btn btn-primary btn-sm">
+
+                                    View Build
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p>
+
+                    No builds are using this mod.
+
+                </p>
+
+            {% endif %}
+
+        </div>
 
     </div>
 
