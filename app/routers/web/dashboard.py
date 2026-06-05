@@ -33,6 +33,10 @@ def dashboard(
         AnalyticsService.build_approach_stats()
     )
 
+    fuel_stats = (
+        AnalyticsService.fuel_type_stats()
+    )
+
     return templates.TemplateResponse(
         "dashboard.html",
         {
@@ -40,6 +44,7 @@ def dashboard(
             "top_cars": top_cars,
             "top_mods": top_mods,
             "expensive_builds": expensive_builds,
-            "build_stats": build_stats
+            "build_stats": build_stats,
+            "fuel_stats": fuel_stats
         }
     )

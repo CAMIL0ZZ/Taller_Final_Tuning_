@@ -1,9 +1,12 @@
-
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 
 from app.services.user_service import (
     UserService
+)
+
+from app.services.build_service import (
+    BuildService
 )
 
 router = APIRouter()
@@ -39,10 +42,15 @@ def user_detail(
         user_id
     )
 
+    builds = BuildService.get_by_user(
+        user_id
+    )
+
     return templates.TemplateResponse(
         "users/detail.html",
         {
             "request": request,
-            "user": user
+            "user": user,
+            "builds": builds
         }
     )

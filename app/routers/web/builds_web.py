@@ -5,6 +5,14 @@ from app.services.build_service import (
     BuildService
 )
 
+from app.services.build_mod_service import (
+    BuildModService
+)
+
+from app.services.user_service import UserService
+from app.services.stock_car_service import StockCarService
+
+
 router = APIRouter()
 
 templates = Jinja2Templates(
@@ -38,10 +46,29 @@ def build_detail(
         build_id
     )
 
+    user = UserService.get_by_id(
+        build["user_id"]
+    )
+
+    stock_car = (
+        StockCarService.get_by_id(
+            build["stock_car_id"]
+        )
+    )
+
+    mods = (
+        BuildModService.get_mods_by_build(
+            build_id
+        )
+    )
+
     return templates.TemplateResponse(
         "builds/detail.html",
         {
             "request": request,
-            "build": build
+            "build": build,
+            "user": user,
+            "stock_car": stock_car,
+            "mods": mods
         }
     )

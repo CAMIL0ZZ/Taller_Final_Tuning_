@@ -5,6 +5,10 @@ from app.services.stock_car_service import (
     StockCarService
 )
 
+from app.services.build_service import (
+    BuildService
+)
+
 router = APIRouter()
 
 templates = Jinja2Templates(
@@ -38,10 +42,15 @@ def stock_car_detail(
         car_id
     )
 
+    builds = BuildService.get_by_car(
+        car_id
+    )
+
     return templates.TemplateResponse(
         "stock_cars/detail.html",
         {
             "request": request,
-            "car": car
+            "car": car,
+            "builds": builds
         }
     )

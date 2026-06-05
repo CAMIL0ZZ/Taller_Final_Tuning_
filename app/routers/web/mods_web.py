@@ -5,6 +5,10 @@ from app.services.mod_service import (
     ModService
 )
 
+from app.services.build_mod_service import (
+    BuildModService
+)
+
 router = APIRouter()
 
 templates = Jinja2Templates(
@@ -38,10 +42,17 @@ def mod_detail(
         mod_id
     )
 
+    builds = (
+        BuildModService.get_by_mod(
+            mod_id
+        )
+    )
+
     return templates.TemplateResponse(
         "mods/detail.html",
         {
             "request": request,
-            "mod": mod
+            "mod": mod,
+            "builds": builds
         }
     )
