@@ -1,15 +1,3 @@
-Sí, definitivamente te recomiendo actualizarlo. Tu README quedó desactualizado respecto a varios cambios que hiciste:
-
-* Los modelos cambiaron bastante.
-* Agregaste imágenes a más entidades.
-* Agregaste Analytics/Dashboard.
-* Agregaste validaciones Pydantic.
-* Agregaste endpoints de Build-Mod adicionales.
-* Los HTML ahora muestran relaciones entre entidades.
-* Los campos de Build, Mod y StockCar cambiaron respecto a la primera versión.
-
-Yo lo reescribiría así:
-
 # Tuning Community
 
 ## Descripción General
@@ -482,7 +470,8 @@ stock-cars/{id}/
 builds/{id}/
 mods/{id}/
 ```
+# URL Render
 
-La URL pública generada es almacenada en la base de datos para su posterior visualización.
+https://taller-final-tuning.onrender.com/
 
 ---
