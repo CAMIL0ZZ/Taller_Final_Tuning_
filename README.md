@@ -470,8 +470,5 @@ stock-cars/{id}/
 builds/{id}/
 mods/{id}/
 ```
-# URL Render
-
-https://taller-final-tuning.onrender.com/
 
 ---
