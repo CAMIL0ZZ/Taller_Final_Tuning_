@@ -55,15 +55,30 @@ app = FastAPI(
 
 # API Routers
 
-app.include_router(users_router)
+app.include_router(
+    users_router,
+    prefix="/api"
+)
 
-app.include_router(stock_cars_router)
+app.include_router(
+    stock_cars_router,
+    prefix="/api"
+)
 
-app.include_router(builds_router)
+app.include_router(
+    builds_router,
+    prefix="/api"
+)
 
-app.include_router(mods_router)
+app.include_router(
+    mods_router,
+    prefix="/api"
+)
 
-app.include_router(build_mods_router)
+app.include_router(
+    build_mods_router,
+    prefix="/api"
+)
 
 # WEB Routers
 
